@@ -32,8 +32,7 @@ public class Neural {
 	int tx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int ty = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	int size = 1;
-	int time = 50;
-	float fade = -1f;
+	int time = 1;
 	double strength = 0.2;
 	int txs = tx / size;
 	int tys = ty / size;
@@ -119,20 +118,6 @@ public class Neural {
 		}
 	}
 
-	public void fade() {
-		if (fade <= 0) {
-			getDrawBufferGraphics().clearRect(0, 0, tx, ty);
-		} else if (fade < 1) {
-			for (int i = 0; i < txs; i++) {
-				for (int j = 0; j < tys; j++) {
-					Color c = new Color(getDisplayBuffer().getRGB(i, j));
-					getDrawBuffer().setRGB(i, j, new Color((int) (c.getRed() * fade), (int) (c.getGreen() * fade),
-							(int) (c.getBlue() * fade)).getRGB());
-				}
-			}
-		}
-	}
-
 	public void init() {
 
 		jframe = new JFrame("Neural");
@@ -155,7 +140,6 @@ public class Neural {
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				fade();
 				gen();
 				swapBuffers();
 			}
